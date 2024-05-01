@@ -6,12 +6,12 @@ namespace DiscussionForum.Models
     {
         public int ID { get; set; }
         public string Reson { get; set; }
-
+     
         public DateTime TimeSpam { get; set; }
 
-        [ForeignKey("ReporterUser")]
-        public string ReporterUserID { get; set; }
-        public ApplicationUser ReporterUser { get; set; }
+        //[ForeignKey("ReporterUser")]
+        //public string ReporterUserID { get; set; }
+        //public ApplicationUser ReporterUser { get; set; }
 
         [ForeignKey("ReportedUser")]
         public string ReportedUserID { get; set; }
