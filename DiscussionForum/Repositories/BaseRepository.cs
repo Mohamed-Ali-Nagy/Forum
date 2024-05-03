@@ -18,10 +18,10 @@ namespace DiscussionForum.Repositories
             await _forumContext.SaveChangesAsync();
             return entity;
         }
-        public void Delete(T entity)
+        public async Task Delete(T entity)
         {
             _forumContext.Set<T>().Remove(entity);
-            _forumContext.SaveChanges();
+           await _forumContext.SaveChangesAsync();
         }
         public async Task<IEnumerable<T>> GetAllAsync()
         {
@@ -31,7 +31,7 @@ namespace DiscussionForum.Repositories
         {
             return await _forumContext.Set<T>().FindAsync(id);
         }
-        public async Task<T> Update(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
             _forumContext.Update(entity);
             await _forumContext.SaveChangesAsync();

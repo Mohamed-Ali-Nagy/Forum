@@ -23,8 +23,8 @@ namespace DiscussionForum.Repositories
         Task<T> AddAsync(T entity);
         //IEnumerable<T> AddRange(IEnumerable<T> entities);
         //Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities);
-        public Task<T> Update(T entity);
-        void Delete(T entity);
+        public Task<T> UpdateAsync(T entity);
+        Task Delete(T entity);
         //void DeleteRange(IEnumerable<T> entities);
         //void Attach(T entity);
         //void AttachRange(IEnumerable<T> entities);
