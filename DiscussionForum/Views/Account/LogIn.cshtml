@@ -1,0 +1,32 @@
+﻿@model LogInVM
+@{
+    ViewData["Title"] = "LogIn";
+}
+
+<h1>LogIn</h1>
+
+<form asp-action="LogIn" class="mt-4">
+    <div class="form-floating mb-3">
+        <input asp-for="@Model.UserName" class="form-control" id="pxp-signin-page-email" placeholder="Email address">
+        <label asp-for="@Model.UserName">Email address</label>
+        <span asp-validation-for="@Model.UserName" class="fa fa-envelope-o"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="@Model.Password" type="password" class="form-control" id="pxp-signin-page-password" placeholder="Password">
+        <label asp-for="@Model.Password">Password</label>
+        <span asp-validation-for="@Model.Password" class="fa fa-lock"></span>
+    </div> 
+    <div>
+        <input type="checkbox" asp-for="@Model.RememberMe"/>
+        <label asp-for="@Model.RememberMe"></label>
+    </div>
+    <div>
+        <input type="submit" value="Login"/>
+    </div>
+@*     <div class="mt-4 text-center pxp-sign-hero-form-small">
+        <a href="#" class="pxp-modal-link">Forgot password</a>               
+    </div> *@
+@*     <div class="mt-4 text-center pxp-sign-hero-form-small">
+        New to Jobster? <a href="sign-up.html">Create an account</a>
+    </div> *@
+</form>

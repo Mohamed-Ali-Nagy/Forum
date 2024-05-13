@@ -10,7 +10,7 @@ namespace DiscussionForum.ViewModels
         public string? Title { get; set; }
 
         public string? Content { get; set; }
-
+        public string? UserName { get; set; }
         public DateTime Timestamp { get; set; }
         public string UserID { get; set; } = null!;
 

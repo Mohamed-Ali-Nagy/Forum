@@ -3,9 +3,9 @@ using DiscussionForum.ViewModels;
 
 namespace DiscussionForum.Helper
 {
-    public static class ExtentionMethods
+    public static class ExtensionMethods
     {
-        public static QuestionResponsVM ToQuestionRespons(this Question question)
+        public static QuestionResponsVM ToQuestionResponse(this Question question)
         {
             return new QuestionResponsVM() {
 
@@ -15,6 +15,7 @@ namespace DiscussionForum.Helper
                 Content = question.Content,
                 UserID = question.UserID,
                 UserImageURL=question.User.ImagePath,
+                UserName=question.User.UserName,
 
             };
         }

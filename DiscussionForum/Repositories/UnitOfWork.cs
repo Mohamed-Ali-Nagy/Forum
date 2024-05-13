@@ -1,4 +1,5 @@
 ﻿using DiscussionForum.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace DiscussionForum.Repositories
 {
@@ -13,6 +14,8 @@ namespace DiscussionForum.Repositories
         public IBaseRepository<Like> Likes {  get; private set; }
 
         public IBaseRepository<Report> Reports { get; private set; }
+        //public RoleManager<IdentityRole> roleManger { get; private set; }
+        //public UserManager<ApplicationUser> userManager { get; private set; }
         public UnitOfWork(ForumContext forumContext)
         {
 
@@ -21,6 +24,7 @@ namespace DiscussionForum.Repositories
             Questions = new BaseRepository<Question>(_forumContext);
             Likes = new BaseRepository<Like>(_forumContext);
             Reports = new BaseRepository<Report>(_forumContext);
+          //  roleManger = new RoleManager<IdentityRole>();
 
         }
         public  int Complete()

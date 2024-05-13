@@ -1,5 +1,7 @@
-﻿using DiscussionForum.Models;
+﻿using DiscussionForum.Helper;
+using DiscussionForum.Models;
 using DiscussionForum.Repositories;
+using DiscussionForum.ViewModels;
 
 namespace DiscussionForum.Services
 {
@@ -22,9 +24,13 @@ namespace DiscussionForum.Services
         {
             return await _unitOfWork.Questions.UpdateAsync(question);
         }
-        public async Task<IEnumerable<Question>> GetAllAsync()
+        public async Task<PaginationResult<QuestionResponsVM>> GetAllAsync(int pageSize,int pageIndex)
         {
-            return await _unitOfWork.Questions.GetAllAsync();
+            string[]includeProperties= new string[] {"User","Answers"};
+            var questionList= await _unitOfWork.Questions.GetAllAsync(pageSize, pageIndex, includeProperties);
+            var questionResponseList=questionList.Select(q=>q.ToQuestionResponse()).ToList();
+            int total = await _unitOfWork.Questions.CountAsync();
+            return new PaginationResult<QuestionResponsVM>(questionResponseList,total,pageIndex);
         }
         public async Task<Question> GetByIdAsync(int id)
         {

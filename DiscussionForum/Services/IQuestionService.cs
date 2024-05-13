@@ -1,4 +1,6 @@
-﻿using DiscussionForum.Models;
+﻿using DiscussionForum.Helper;
+using DiscussionForum.Models;
+using DiscussionForum.ViewModels;
 
 namespace DiscussionForum.Services
 {
@@ -11,7 +13,7 @@ namespace DiscussionForum.Services
         Task DeleteAsync(Question question);
         Task<Question> GetByIdAsync(int id);
 
-        Task<IEnumerable<Question>> GetAllAsync();
+        Task<PaginationResult<QuestionResponsVM>> GetAllAsync(int pageSize,int pageIndex);
 
 
 
