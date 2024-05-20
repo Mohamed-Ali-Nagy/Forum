@@ -8,6 +8,6 @@ namespace DiscussionForum.Repositories
         public IBaseRepository<Question> Questions { get;}
         public IBaseRepository<Like> Likes { get;}
         public IBaseRepository<Report> Reports  { get;}
-        int Complete();
+        Task<int> Complete();
     }
 }

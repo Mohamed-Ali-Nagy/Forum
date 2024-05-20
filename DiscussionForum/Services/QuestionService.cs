@@ -12,29 +12,85 @@ namespace DiscussionForum.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<Question> AddAsync(Question question)
+        public async Task<ServiceResult<Question>> AddAsync(Question question)
         {
-           return await _unitOfWork.Questions.AddAsync(question);
+           if(question == null)
+            {
+                return ServiceResult<Question>.Failed("question can not be null");
+            }
+            try
+            {
+                
+                var result=await _unitOfWork.Questions.AddAsync(question);
+                await _unitOfWork.Complete();
+                return ServiceResult<Question>.Succeeded(result);
+            }
+            catch (Exception ex)
+            {
+                return ServiceResult<Question>.Failed("An error occurred during adding question.");
+            }
         }
-        public async Task DeleteAsync(Question question)                 
+        public async Task<ServiceResult<Question>> DeleteAsync(int id)                 
         {
-           await _unitOfWork.Questions.Delete(question);
+            Question question=await _unitOfWork.Questions.GetByIdAsync(id);
+            try 
+            {
+                await _unitOfWork.Questions.Delete(question);
+                await _unitOfWork.Complete();
+                return ServiceResult<Question>.Succeeded(question);
+            }catch (Exception ex)
+            {
+                return ServiceResult<Question>.Failed("error occurred while deleting the question ");
+            }
+           
         }
-        public async Task<Question> EditAsync(Question question)
+        public async Task<ServiceResult<Question>> EditAsync(Question question)
         {
-            return await _unitOfWork.Questions.UpdateAsync(question);
+            if (question == null)
+            {
+                return ServiceResult<Question>.Failed("question can not be null");
+            }
+            try
+            {
+                var result = await _unitOfWork.Questions.UpdateAsync(question);
+                await _unitOfWork.Complete();
+                return ServiceResult<Question>.Succeeded(result);
+            }
+            catch (Exception ex)
+            {
+                return ServiceResult<Question>.Failed("An error occurred during updating question.");
+            }
+            
         }
-        public async Task<PaginationResult<QuestionResponsVM>> GetAllAsync(int pageSize,int pageIndex)
+        public async Task<ServiceResult<PaginationResult<QuestionResponsVM>>> GetAllAsync(int pageSize,int pageIndex)
         {
-            string[]includeProperties= new string[] {"User","Answers"};
-            var questionList= await _unitOfWork.Questions.GetAllAsync(pageSize, pageIndex, includeProperties);
-            var questionResponseList=questionList.Select(q=>q.ToQuestionResponse()).ToList();
-            int total = await _unitOfWork.Questions.CountAsync();
-            return new PaginationResult<QuestionResponsVM>(questionResponseList,total,pageIndex);
-        }
-        public async Task<Question> GetByIdAsync(int id)
+            try
+            {
+                string[] includeProperties = new string[] { "User", "Answers" };
+                var questionList = await _unitOfWork.Questions.GetAllAsync(pageSize, pageIndex, includeProperties);
+                var questionResponseList = questionList.Select(q => q.ToQuestionResponse()).ToList();
+                int total = await _unitOfWork.Questions.CountAsync();
+                var paginationResult = new PaginationResult<QuestionResponsVM>(questionResponseList, total, pageIndex);
+                return ServiceResult<PaginationResult<QuestionResponsVM>>.Succeeded(paginationResult); //new PaginationResult<QuestionResponsVM>(questionResponseList, total, pageIndex);
+            }
+            catch (Exception ex)
+            {
+                return ServiceResult<PaginationResult<QuestionResponsVM>>.Failed("error occurred while retrive the questions");
+            }
+       
+        }                                                             
+        public async Task<ServiceResult<Question>> GetByIdAsync(int id)
         {
-            return await _unitOfWork.Questions.GetByIdAsync(id);
+            try
+            {
+                var question = await _unitOfWork.Questions.GetByIdAsync(id);
+                return ServiceResult<Question>.Succeeded(question);
+            }
+            catch (Exception ex)
+            {
+                return ServiceResult<Question>.Failed(ex.Message);
+            }
+          
         }
     }
 }

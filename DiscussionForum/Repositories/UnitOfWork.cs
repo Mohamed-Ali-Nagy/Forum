@@ -27,9 +27,9 @@ namespace DiscussionForum.Repositories
           //  roleManger = new RoleManager<IdentityRole>();
 
         }
-        public  int Complete()
+        public  async Task<int> Complete()
         {
-            return  _forumContext.SaveChanges();
+            return await  _forumContext.SaveChangesAsync();
         }
 
         public void Dispose()

@@ -6,14 +6,14 @@ namespace DiscussionForum.Services
 {
     public interface IQuestionService
     {
-       Task<Question> AddAsync(Question question);
+       Task<ServiceResult<Question>> AddAsync(Question question);
 
-       Task<Question> EditAsync(Question question);
+        Task<ServiceResult<Question>> EditAsync(Question question);
 
-        Task DeleteAsync(Question question);
-        Task<Question> GetByIdAsync(int id);
+        Task<ServiceResult<Question>> DeleteAsync(int id);
+        Task<ServiceResult<Question>> GetByIdAsync(int id);
 
-        Task<PaginationResult<QuestionResponsVM>> GetAllAsync(int pageSize,int pageIndex);
+        Task<ServiceResult<PaginationResult<QuestionResponsVM>>> GetAllAsync(int pageSize,int pageIndex);
 
 
 
